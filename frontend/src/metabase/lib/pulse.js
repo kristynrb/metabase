@@ -35,6 +35,10 @@ export function pulseIsValid(pulse, channelSpecs) {
     ) || false;
 }
 
+export function emailIsEnabled(pulse) {
+    return pulse.channels.filter(c => c.channel_type === "email" && c.enabled).length > 0;
+}
+
 export function cleanPulse(pulse, channelSpecs) {
     return {
         ...pulse,
