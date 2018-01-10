@@ -167,3 +167,8 @@ const AttachmentWidget = ({ card, onChange }) =>
             </span>
         )}
     </div>
+
+AttachmentWidget.propTypes = {
+    card: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
+}

@@ -41,7 +41,7 @@ export default class PulseCardPreview extends Component {
     }
 
     render() {
-        let { card, cardPreview, attachmentsEnabled } = this.props;
+        let { cardPreview, attachmentsEnabled } = this.props;
         return (
             <div className="flex relative flex-full">
                 <div className="absolute top right p1 text-grey-2">
