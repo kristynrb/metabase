@@ -106,7 +106,6 @@ class CurrentPicker extends Component {
     }
 }
 
-
 const getIntervals = ([op, field, value, unit]) => mbqlEq(op, "time-interval") && typeof value === "number" ? Math.abs(value) : 30;
 const getUnit      = ([op, field, value, unit]) => mbqlEq(op, "time-interval") && unit ? unit : "day";
 
@@ -129,7 +128,7 @@ function getDateTimeField(field: ConcreteField, bucketing: ?DatetimeUnit): Concr
     }
 }
 
-function getDateTimeFieldTarget(field: ConcreteField): LocalFieldReference|ForeignFieldReference|ExpressionReference {
+export function getDateTimeFieldTarget(field: ConcreteField): LocalFieldReference|ForeignFieldReference|ExpressionReference {
     if (Query.isDatetimeField(field)) {
         // $FlowFixMe:
         return (field[1]: LocalFieldReference|ForeignFieldReference|ExpressionReference);
@@ -209,7 +208,6 @@ export const DATE_OPERATORS: Operator[] = [
         test: ([op]) => mbqlEq(op, "between"),
         widget: MultiDatePicker,
     },
-
 ];
 
 export const EMPTINESS_OPERATORS: Operator[] = [
@@ -225,8 +223,6 @@ export const EMPTINESS_OPERATORS: Operator[] = [
     }
 ];
 
-export const ALL_OPERATORS: Operator[] = DATE_OPERATORS.concat(EMPTINESS_OPERATORS);
-
 type Props = {
     className?: string,
     filter: FieldFilter,
@@ -234,6 +230,7 @@ type Props = {
     hideEmptinessOperators?: boolean, // Don't show is empty / not empty dialog
     hideTimeSelectors?: boolean,
     includeAllTime?: boolean,
+    operators?: Operator[],
 }
 
 type State = {
@@ -251,11 +248,15 @@ export default class DatePicker extends Component {
         onFilterChange: PropTypes.func.isRequired,
         className: PropTypes.string,
         hideEmptinessOperators: PropTypes.bool,
-        hideTimeSelectors: PropTypes.bool
+        hideTimeSelectors: PropTypes.bool,
+        operators: PropTypes.array,
     };
 
     componentWillMount() {
-        const operators = this.props.hideEmptinessOperators ? DATE_OPERATORS : ALL_OPERATORS;
+        let operators = this.props.operators || DATE_OPERATORS;
+        if (!this.props.hideEmptinessOperators) {
+            operators = operators.concat(EMPTINESS_OPERATORS);
+        }
 
         const operator = this._getOperator(operators) || operators[0];
         this.props.onFilterChange(operator.init(this.props.filter));
