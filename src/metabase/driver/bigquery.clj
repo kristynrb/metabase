@@ -336,11 +336,10 @@
 
 (defmethod sqlqp/->honeysql [BigQueryDriver TimeValue]
   [driver {:keys [value]}]
-  (sqlqp/->honeysql driver (unparse-bigquery-time value)))
-
-(defmethod sqlqp/->honeysql [BigQueryDriver Time]
-  [driver time-value]
-  (hx/->time time-value))
+  (->> value
+       unparse-bigquery-time
+       (sqlqp/->honeysql driver)
+       hx/->time))
 
 (defn- field->alias [{:keys [^String schema-name, ^String field-name, ^String table-name, ^Integer index, field], :as this}]
   {:pre [(map? this) (or field
