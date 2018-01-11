@@ -150,17 +150,20 @@ export default class PulseEditCards extends Component {
     }
 }
 
+const ATTACHMENT_TYPES = ["csv", "xls"];
+
 const AttachmentWidget = ({ card, onChange }) =>
     <div>
-        { ["csv", "xls"].map(type =>
+        { ATTACHMENT_TYPES.map(type =>
             <span
                 key={type}
                 className={cx("text-brand-hover cursor-pointer mr1", { "text-brand": card["include_"+type] })}
                 onClick={() => {
-                    onChange({
-                      ...card,
-                      ["include_"+type]: !card["include_"+type]
-                    })
+                    const newCard = { ...card }
+                    for (const attachmentType of ATTACHMENT_TYPES) {
+                      newCard["include_" + attachmentType] = type === attachmentType;
+                    }
+                    onChange(newCard)
                 }}
             >
                 {"." + type}
