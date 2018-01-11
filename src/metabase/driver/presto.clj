@@ -208,11 +208,11 @@
      (tformat/unparse (tformat/with-zone time-format tz) (tcoerce/to-date-time t)))))
 
 (defmethod sqlqp/->honeysql [PrestoDriver TimeValue]
-  [{:keys [value timezone-id]}]
+  [_ {:keys [value timezone-id]}]
   (hx/cast :time (time->str value timezone-id)))
 
 (defmethod sqlqp/->honeysql [PrestoDriver Time]
-  [{:keys [value]}]
+  [_ {:keys [value]}]
   (hx/->time (time->str value)))
 
 (defn- execute-query [{:keys [database settings], {sql :query, params :params} :native, :as outer-query}]
