@@ -1,4 +1,5 @@
 import React from "react";
+import { t } from 'c-3po';
 
 import DatePicker, { getDateTimeFieldTarget } from "./DatePicker";
 import HoursMinutesInput from "./HoursMinutesInput";
@@ -43,19 +44,22 @@ const getTime = (value) => {
 
 export const TIME_OPERATORS: Operator[] = [
   {
-      name: "Before",
+      name: "before",
+      displayName: t`Before`,
       init: (filter) =>  ["<", getDateTimeFieldTarget(filter[1]), getTime(filter[2])],
       test: ([op]) => op === "<",
       widget: SingleTimePicker,
   },
   {
-      name: "After",
+      name: "after",
+      displayName: t`After`,
       init: (filter) => [">", getDateTimeFieldTarget(filter[1]), getTime(filter[2])],
       test: ([op]) => op === ">",
       widget: SingleTimePicker,
   },
   {
-      name: "Between",
+      name: "between",
+      displayName: t`Between`,
       init: (filter) => ["BETWEEN", getDateTimeFieldTarget(filter[1]), getTime(filter[2]), getTime(filter[3])],
       test: ([op]) => mbqlEq(op, "between"),
       widget: MultiTimePicker,

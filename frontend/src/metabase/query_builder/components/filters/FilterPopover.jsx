@@ -1,10 +1,11 @@
 /* @flow */
 
 import React, { Component } from "react";
+import { t } from 'c-3po';
 
 import FieldList from "../FieldList.jsx";
 import OperatorSelector from "./OperatorSelector.jsx";
-import { t } from 'c-3po';
+import FilterOptions from "./FilterOptions";
 import DatePicker from "./pickers/DatePicker.jsx";
 import TimePicker from "./pickers/TimePicker.jsx";
 import NumberPicker from "./pickers/NumberPicker.jsx";
@@ -243,6 +244,7 @@ export default class FilterPopover extends Component {
         const { query } = this.props;
         const { filter } = this.state;
         const [operator, fieldRef] = filter;
+
         if (operator === "SEGMENT" || fieldRef == undefined) {
             return (
                 <div className="FilterPopover">
@@ -297,10 +299,11 @@ export default class FilterPopover extends Component {
                             { this.renderPicker(filter, field) }
                         </div>
                     }
-                    <div className="FilterPopover-footer p1">
+                    <div className="FilterPopover-footer border-top flex align-center p2">
+                        <FilterOptions filter={filter} onFilterChange={this.setFilter} />
                         <button
                             data-ui-tag="add-filter"
-                            className={cx("Button Button--purple full", { "disabled": !this.isValid() })}
+                            className={cx("Button Button--purple ml-auto", { "disabled": !this.isValid() })}
                             onClick={() => this.commitFilter(this.state.filter)}
                         >
                             {!this.props.filter ? t`Add filter` : t`Update filter`}
