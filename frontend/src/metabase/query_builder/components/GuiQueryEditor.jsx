@@ -274,8 +274,12 @@ export default class GuiQueryEditor extends Component {
     }
 
     renderDataSection() {
-        const { query } = this.props;
+        const { databases, tables, query, isShowingTutorial } = this.props;
         const tableMetadata = query.tableMetadata();
+        const datasetQuery = query.datasetQuery();
+        const sourceTable = datasetQuery && datasetQuery.query && datasetQuery.query.source_table;
+        const isInitiallyOpen = (!datasetQuery.database || !sourceTable) && !isShowingTutorial;
+
         return (
             <div className={"GuiBuilder-section GuiBuilder-data flex align-center arrow-right"}>
                 <span className="GuiBuilder-section-label Query-label">{t`Data`}</span>
@@ -283,12 +287,12 @@ export default class GuiQueryEditor extends Component {
                     <DataSelector
                         ref="dataSection"
                         includeTables={true}
-                        datasetQuery={query.datasetQuery()}
-                        databases={this.props.databases}
-                        tables={this.props.tables}
+                        databases={databases}
+                        tables={tables}
+                        sourceTable={datasetQuery.sourceTable}
                         setDatabaseFn={this.props.setDatabaseFn}
                         setSourceTableFn={this.props.setSourceTableFn}
-                        isInitiallyOpen={(!query.datasetQuery().database || !query.query().source_table) && !this.props.isShowingTutorial}
+                        isInitiallyOpen={isInitiallyOpen}
                     />
                     :
                     <span className="flex align-center px2 py2 text-bold text-grey">

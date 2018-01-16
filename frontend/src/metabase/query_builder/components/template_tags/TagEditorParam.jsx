@@ -11,15 +11,18 @@ import { parameterOptionsForField } from "metabase/meta/Dashboard";
 
 import _ from "underscore";
 
-import type { TemplateTag } from "metabase/meta/types/Query"
+import type { TemplateTag } from "metabase/meta/types/Query";
+import type { Database } from "metabase/meta/types/Database"
 
 import Field from "metabase-lib/lib/metadata/Field";
 
 type Props = {
     tag: TemplateTag,
     onUpdate: (tag: TemplateTag) => void,
-    databaseFields: Field[]
-}
+    databaseFields: Field[],
+    database: Database,
+    databases: Database[],
+};
 
 export default class TagEditorParam extends Component {
     props: Props;
@@ -129,6 +132,15 @@ export default class TagEditorParam extends Component {
                 { tag.type === "dimension" &&
                     <div className="pb1">
                         <h5 className="pb1 text-normal">{t`Field to map to`}</h5>
+
+{/*                        <DataSelector
+                            ref="dataSection"
+                            includeTables={true}
+                            databases={databases}
+                            tables={tables}
+                            tableMetadata={tableMetadata}
+                        />*/}
+
                         <Select
                             className="border-med bg-white block"
                             value={Array.isArray(tag.dimension) ? tag.dimension[1] : null}
