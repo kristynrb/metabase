@@ -230,8 +230,8 @@
                  (result-attachments results)))))
 
 (defn- assoc-attachment-booleans [pulse results]
-  (for [{{result-card-name :name} :card :as result} results
-        :let [pulse-card (m/find-first #(= (:name %) result-card-name) (:cards pulse))]]
+  (for [{{result-card-id :id} :card :as result} results
+        :let [pulse-card (m/find-first #(= (:id %) result-card-id) (:cards pulse))]]
     (update result :card merge (select-keys pulse-card [:include_csv :include_xls]))))
 
 (defn render-pulse-email
