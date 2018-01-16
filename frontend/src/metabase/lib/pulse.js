@@ -45,3 +45,41 @@ export function cleanPulse(pulse, channelSpecs) {
         channels: pulse.channels.filter((c) => channelIsValid(c, channelSpecs && channelSpecs[c.channel_type]))
     };
 }
+
+export function getDefaultChannel(channelSpecs) {
+  // email is the first choice
+  if (channelSpecs.email.configured) {
+    return channelSpecs.email;
+  }
+  // otherwise just pick the first configured
+  for (const channelSpec of Object.values(channelSpecs)) {
+    if (channelSpec.configured) {
+      return channelSpec;
+    }
+  }
+}
+
+export function createChannel(channelSpec) {
+    const details = {};
+
+    // if (channelSpec.fields) {
+    //     for (let field of channelSpec.fields) {
+    //         if (field.required) {
+    //             if (field.type === "select") {
+    //                 details[field.name] = field.options[0];
+    //             }
+    //         }
+    //     }
+    // }
+
+    return {
+        channel_type: channelSpec.type,
+        enabled: true,
+        recipients: [],
+        details: details,
+        schedule_type: channelSpec.schedules[0],
+        schedule_day: "mon",
+        schedule_hour: 8,
+        schedule_frame: "first"
+    };
+}

@@ -57,14 +57,15 @@ export default class PulseEditCards extends Component {
     getNotices(card, cardPreview, index) {
         const showSoftLimitWarning = index === SOFT_LIMIT;
         let notices = [];
-        if (this.props.attachmentsEnabled && card && (card.include_csv || card.include_xls)) {
+        const hasAttachment = this.props.attachmentsEnabled && card && (card.include_csv || card.include_xls);
+        if (hasAttachment) {
             notices.push({
                 head: t`Attachment`,
                 body: <AttachmentWidget card={card} onChange={(card) => this.setCard(index, card)} />
             });
         }
         if (cardPreview) {
-            if (cardPreview.pulse_card_type == null) {
+            if (cardPreview.pulse_card_type == null && !hasAttachment) {
                 notices.push({
                     type: "warning",
                     head: t`Heads up`,
@@ -92,7 +93,7 @@ export default class PulseEditCards extends Component {
                         <div
                             className={cx("border-left mt1 mb2 ml3 pl3", {
                               "text-gold border-gold": notice.type === "warning",
-                              "border-blue":           notice.type !== "warning"
+                              "border-brand":          notice.type !== "warning"
                             })}
                             style={{ borderWidth: 3 }}
                         >
@@ -137,6 +138,7 @@ export default class PulseEditCards extends Component {
                                         <CardPicker
                                             cardList={cardList}
                                             onChange={this.addCard.bind(this, index)}
+                                            attachmentsEnabled={this.props.attachmentsEnabled}
                                         />
                                     }
                                 </div>

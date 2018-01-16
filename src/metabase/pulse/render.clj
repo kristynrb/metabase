@@ -556,7 +556,7 @@
         col-2 (-> data :cols second)
         aggregation (-> card :dataset_query :query :aggregation first)]
     (cond
-      (or (= aggregation :rows)
+      (or (> col-count 3)
           (contains? #{:pin_map :state :country} (:display card))) nil
       (or (zero? row-count)
           ;; Many aggregations result in [[nil]] if there are no rows to aggregate after filters
@@ -582,7 +582,7 @@
                                             :width         :100%})}
                      [:tbody
                       [:tr
-                       [:td [:span {:style header-style}
+                       [:td [:span {:style (style header-style)}
                              (-> card :name h)]]
                        [:td {:style (style {:text-align :right})}
                         (when *include-buttons*

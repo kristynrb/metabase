@@ -18,6 +18,7 @@
              [pulse-channel :refer [channel-types]]]
             [metabase.pulse.render :as render]
             [metabase.util.schema :as su]
+            [metabase.util.urls :as urls]
             [schema.core :as s]
             [toucan.db :as db])
   (:import java.io.ByteArrayInputStream
@@ -130,6 +131,8 @@
     {:id              id
      :pulse_card_type card-type
      :pulse_card_html card-html
+     :pulse_card_name (:name card)
+     :pulse_card_url  (urls/card-url (:id card))
      :row_count       (:row_count result)}))
 
 (api/defendpoint GET "/preview_card_png/:id"
