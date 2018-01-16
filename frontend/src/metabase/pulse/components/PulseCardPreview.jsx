@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import Icon from "metabase/components/Icon.jsx";
 import LoadingSpinner from "metabase/components/LoadingSpinner.jsx";
+import Tooltip from "metabase/components/Tooltip.jsx";
 
 import cx from "classnames";
 
@@ -51,16 +52,19 @@ export default class PulseCardPreview extends Component {
 
     render() {
         let { cardPreview, attachmentsEnabled } = this.props;
-        const isAttachment = attachmentsEnabled && cardPreview && cardPreview.pulse_card_type == null && this.hasAttachment()
+        const hasAttachment = this.hasAttachment();
+        const isAttachmentOnly = attachmentsEnabled && hasAttachment && cardPreview && cardPreview.pulse_card_type == null;
         return (
             <div className="flex relative flex-full">
                 <div className="absolute top right p2 text-grey-2">
-                    { attachmentsEnabled && !isAttachment &&
-                        <Icon
-                            name="attachment" size={18}
-                            className={cx("cursor-pointer py1 pr1 text-brand-hover", { "text-brand": this.hasAttachment() })}
-                            onClick={this.toggleAttachment}
-                        />
+                    { attachmentsEnabled && !isAttachmentOnly &&
+                        <Tooltip tooltip={hasAttachment ? "Remove attachment" : "Attach file with results"}>
+                            <Icon
+                                name="attachment" size={18}
+                                className={cx("cursor-pointer py1 pr1 text-brand-hover", { "text-brand": this.hasAttachment() })}
+                                onClick={this.toggleAttachment}
+                            />
+                        </Tooltip>
                     }
                     <Icon
                         name="close" size={18}
@@ -73,7 +77,7 @@ export default class PulseCardPreview extends Component {
                     style={{ display: !cardPreview && "none" }}
                 >
                     {/* Override backend rendering if we're including this as an attachment */}
-                    { isAttachment ?
+                    { isAttachmentOnly ?
                       <RenderedPulseCardPreview href={cardPreview.pulse_card_url}>
                         <RenderedPulseCardPreviewHeader>
                           {cardPreview.pulse_card_name}
