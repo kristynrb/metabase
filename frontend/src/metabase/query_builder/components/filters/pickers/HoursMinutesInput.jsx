@@ -9,6 +9,7 @@ const HoursMinutesInput = ({ hours, minutes, onChangeHours, onChangeMinutes, onC
     <div className="flex align-center">
         <NumericInput
             className="input"
+            style={{ height: 36 }}
             size={2}
             maxLength={2}
             value={(hours % 12) === 0 ? "12" : String(hours % 12)}
@@ -17,6 +18,7 @@ const HoursMinutesInput = ({ hours, minutes, onChangeHours, onChangeMinutes, onC
         <span className="px1">:</span>
         <NumericInput
             className="input"
+            style={{ height: 36 }}
             size={2}
             maxLength={2}
             value={(minutes < 10 ? "0" : "") + minutes}

@@ -66,8 +66,12 @@ const MultiDatePicker = ({ filter: [op, field, startValue, endValue], onFilterCh
 const PreviousPicker =  (props) =>
     <RelativeDatePicker {...props} formatter={(value) => value * -1} />
 
+PreviousPicker.horizontalLayout = true;
+
 const NextPicker = (props) =>
     <RelativeDatePicker {...props} />
+
+NextPicker.horizontalLayout = true;
 
 type CurrentPickerProps = {
     filter: TimeIntervalFilter,
@@ -85,6 +89,8 @@ class CurrentPicker extends Component {
     state = {
         showUnits: false
     };
+
+    static horizontalLayout = true;
 
     render() {
         const { filter: [operator, field, intervals, unit], onFilterChange } = this.props
@@ -295,19 +301,10 @@ export default class DatePicker extends Component {
         const operator = getOperator(this.props.filter, operators);
         const Widget = operator && operator.widget;
 
-        // certain types of operators need to have a horizontal layout
-        // where the value is chosen next to the operator selector
-        // TODO - there's no doubt a cleaner _ way to do this
-        const needsHorizontalLayout = operator && (
-            operator.name === "current"  ||
-            operator.name === "previous" ||
-            operator.name === "next"
-        );
-
         return (
             <div
               // apply flex to align the operator selector and the "Widget" if necessary
-              className={cx("border-top pt2", { "flex align-center": needsHorizontalLayout })}
+              className={cx("border-top pt2", { "flex align-center": Widget && Widget.horizontalLayout })}
               style={{ minWidth: 380 }}
             >
                 <DateOperatorSelector

@@ -19,13 +19,16 @@ const TimeInput = ({ value, onChange }) => {
 }
 
 const SingleTimePicker = ({ filter, onFilterChange }) =>
-  <div className="mx2 mb1">
+  <div className="mx2 mb2">
     <TimeInput value={getTime(filter[2])} onChange={(time) => onFilterChange([filter[0], filter[1], time])} />
   </div>
 
+SingleTimePicker.horizontalLayout = true;
+
 const MultiTimePicker = ({ filter, onFilterChange }) =>
-  <div className="flex mx2 mb1">
+  <div className="flex align-center justify-between mx2 mb1" style={{ minWidth: 480 }}>
     <TimeInput value={getTime(filter[2])} onChange={(time) => onFilterChange([filter[0], filter[1], ...sortTimes(time, filter[3])])} />
+    <span className="h3">and</span>
     <TimeInput value={getTime(filter[3])} onChange={(time) => onFilterChange([filter[0], filter[1], ...sortTimes(filter[2], time)])} />
   </div>
 
