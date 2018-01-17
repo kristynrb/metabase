@@ -69,7 +69,7 @@ export default class PulseEditCards extends Component {
                 notices.push({
                     type: "warning",
                     head: t`Heads up`,
-                    body: t`We are unable to display this card in a pulse`
+                    body: t`Raw data questions can only be included as email attachments`
                 });
             }
         }

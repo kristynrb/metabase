@@ -7,6 +7,7 @@ import Icon from "metabase/components/Icon.jsx";
 import LoadingSpinner from "metabase/components/LoadingSpinner.jsx";
 import Tooltip from "metabase/components/Tooltip.jsx";
 
+import { t } from "c-3po";
 import cx from "classnames";
 
 export default class PulseCardPreview extends Component {
@@ -76,14 +77,18 @@ export default class PulseCardPreview extends Component {
                     className="bordered rounded flex-full scroll-x"
                     style={{ display: !cardPreview && "none" }}
                 >
-                    {/* Override backend rendering if we're including this as an attachment */}
-                    { isAttachmentOnly ?
+                    {/* Override backend rendering if pulse_card_type == null */}
+                    { cardPreview && cardPreview.pulse_card_type == null ?
                       <RenderedPulseCardPreview href={cardPreview.pulse_card_url}>
                         <RenderedPulseCardPreviewHeader>
                           {cardPreview.pulse_card_name}
                         </RenderedPulseCardPreviewHeader>
                         <RenderedPulseCardPreviewMessage>
-                          This question will be added as a file attachment
+                          { isAttachmentOnly ?
+                            t`This question will be added as a file attachment`
+                          :
+                            t`This question won't be included in your Pulse`
+                          }
                         </RenderedPulseCardPreviewMessage>
                       </RenderedPulseCardPreview>
                     :
