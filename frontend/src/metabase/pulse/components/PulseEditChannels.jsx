@@ -164,6 +164,7 @@ export default class PulseEditChannels extends Component {
                         <div className="h4 text-bold mb1">{ this.props.emailRecipientText || "To:" }</div>
                         <RecipientPicker
                             isNewPulse={this.props.pulseId === undefined}
+                            autoFocus={!!this.props.pulse.name}
                             recipients={channel.recipients}
                             recipientTypes={channelSpec.recipients}
                             users={this.props.userList}

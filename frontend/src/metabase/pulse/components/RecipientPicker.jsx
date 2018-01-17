@@ -35,10 +35,7 @@ export default class RecipientPicker extends Component {
             inputValue: "",
             filteredUsers: [],
             selectedUserID: null,
-            // NOTE: set to false now that a channel may be enabled by default,
-            // which would remove focus from the pulse name in a new pulse.
-            // previously: props.recipients.length === 0
-            focused: false
+            focused: props.autoFocus && props.recipients.length === 0
         };
     }
 
@@ -50,10 +47,12 @@ export default class RecipientPicker extends Component {
         users: PropTypes.array,
         isNewPulse: PropTypes.bool.isRequired,
         onRecipientsChange: PropTypes.func.isRequired,
+        autoFocus: PropTypes.bool,
     };
 
     static defaultProps = {
-        recipientTypes: ["user", "email"]
+        recipientTypes: ["user", "email"],
+        autoFocus: true
     };
 
     setInputValue(inputValue) {
