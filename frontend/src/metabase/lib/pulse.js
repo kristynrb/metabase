@@ -62,16 +62,6 @@ export function getDefaultChannel(channelSpecs) {
 export function createChannel(channelSpec) {
     const details = {};
 
-    // if (channelSpec.fields) {
-    //     for (let field of channelSpec.fields) {
-    //         if (field.required) {
-    //             if (field.type === "select") {
-    //                 details[field.name] = field.options[0];
-    //             }
-    //         }
-    //     }
-    // }
-
     return {
         channel_type: channelSpec.type,
         enabled: true,

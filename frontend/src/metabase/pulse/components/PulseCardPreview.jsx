@@ -29,10 +29,10 @@ export default class PulseCardPreview extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if we couldn't detect a card type, set include_csv = true
-        if (nextProps.cardPreview && nextProps.cardPreview.pulse_card_type == null &&
-            !nextProps.card.include_csv && !nextProps.card.include_xls)
-        {
+        // if we can't render this card as a pulse, set include_csv = true
+        const unrenderablePulseCard = nextProps.cardPreview && nextProps.cardPreview.pulse_card_type == null;
+        const hasAttachment = nextProps.card.include_csv || nextProps.card.include_xls;
+        if (unrenderablePulseCard && !hasAttachment) {
             nextProps.onChange({ ...nextProps.card, include_csv: true })
         }
     }
@@ -105,7 +105,7 @@ export default class PulseCardPreview extends Component {
     }
 }
 
-// copied from metabase/pulse/render.clj
+// implements the same layout as in metabase/pulse/render.clj
 const RenderedPulseCardPreview = ({ href, children }) =>
   <a
     href={href}
@@ -126,7 +126,7 @@ RenderedPulseCardPreview.propTypes = {
   children: PropTypes.node
 }
 
-// copied from metabase/pulse/render.clj
+// implements the same layout as in metabase/pulse/render.clj
 const RenderedPulseCardPreviewHeader = ({ children }) =>
     <table style={{ marginBottom: 8, width: "100%" }}>
       <tbody>

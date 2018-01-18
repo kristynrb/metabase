@@ -461,7 +461,7 @@
 
 (def ^:private external-link-url (io/resource "frontend_client/app/assets/img/external_link.png"))
 (def ^:private no-results-url    (io/resource "frontend_client/app/assets/img/pulse_no_results@2x.png"))
-(def ^:private attached-url      (io/resource "frontend_client/app/assets/img/pulse_attached@2x.png"))
+(def ^:private attached-url      (io/resource "frontend_client/app/assets/img/attachment@2x.png"))
 
 (def ^:private external-link-image
   (delay
@@ -565,7 +565,7 @@
   (let [image-bundle (attached-image-bundle render-type)]
     {:attachments (image-bundle->attachment image-bundle)
      :content     [:div {:style (style {:text-align :center})}
-                   [:img {:style (style {:width :104px})
+                   [:img {:style (style {:width :30px})
                           :src   (:image-src image-bundle)}]
                    [:div {:style (style font-style
                                         {:margin-top :8px
