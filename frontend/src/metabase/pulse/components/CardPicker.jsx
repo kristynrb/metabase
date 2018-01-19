@@ -162,7 +162,7 @@ export default class CardPicker extends Component {
                     : collections ?
                         <CollectionList>
                             {collections.map(collection =>
-                                <CollectionListItem collection={collection} onClick={(e) => {
+                                <CollectionListItem key={collection.id} collection={collection} onClick={(e) => {
                                     this.setState({ collectionId: collection.id, isClicking: true });
                                 }}/>
                             )}

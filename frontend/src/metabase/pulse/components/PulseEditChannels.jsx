@@ -45,7 +45,7 @@ export default class PulseEditChannels extends Component {
         userList: PropTypes.array.isRequired,
         setPulse: PropTypes.func.isRequired,
         testPulse: PropTypes.func,
-        cardPreviews: PropTypes.array,
+        cardPreviews: PropTypes.object,
         hideSchedulePicker: PropTypes.bool,
         emailRecipientText: PropTypes.string
     };

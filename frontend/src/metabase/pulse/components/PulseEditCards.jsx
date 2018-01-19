@@ -89,8 +89,9 @@ export default class PulseEditCards extends Component {
         if (notices.length > 0) {
             return (
                 <div className="absolute" style={{ width: 400, marginLeft: 420 }}>
-                    {notices.map(notice =>
+                    {notices.map((notice, index) =>
                         <div
+                            key={index}
                             className={cx("border-left mt1 mb2 ml3 pl3", {
                               "text-gold border-gold": notice.type === "warning",
                               "border-brand":          notice.type !== "warning"
