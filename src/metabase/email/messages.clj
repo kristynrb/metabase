@@ -210,7 +210,8 @@
   (remove nil?
           (apply concat
                  (for [{{card-name :name, csv? :include_csv, xls? :include_xls} :card :as result} results
-                       :when (or csv? xls?)]
+                       :when (and (or csv? xls?)
+                                  (seq (get-in result [:result :data :rows])))]
                    [(when-let [temp-file (and csv? (create-temp-file "csv"))]
                       (export/export-to-csv-writer temp-file result)
                       (create-result-attachment-map "csv" card-name temp-file))

@@ -600,11 +600,11 @@
         col-2 (-> data :cols second)
         aggregation (-> card :dataset_query :query :aggregation first)]
     (cond
-      (or (> col-count 3)
-          (contains? #{:pin_map :state :country} (:display card))) nil
       (or (zero? row-count)
           ;; Many aggregations result in [[nil]] if there are no rows to aggregate after filters
           (= [[nil]] (-> data :rows)))                             :empty
+      (or (> col-count 3)
+          (contains? #{:pin_map :state :country} (:display card))) nil
       (and (= col-count 1)
            (= row-count 1))                                        :scalar
       (and (= col-count 2)

@@ -546,6 +546,26 @@
      (send-pulse! (retrieve-pulse pulse-id))
      (et/summarize-multipart-email #"Pulse Name"))))
 
+;; Basic test of card with CSV and XLS attachments, but no data. Should not include an attachment
+(expect
+  (rasta-pulse-email)
+
+  (tt/with-temp* [Card                 [{card-id :id}  (checkins-query {:filter   [">",["field-id" (data/id :checkins :date)],"2017-10-24"]
+                                                                        :breakout [["datetime-field" (data/id :checkins :date) "hour"]]})]
+                  Pulse                [{pulse-id :id} {:name          "Pulse Name"
+                                                        :skip_if_empty false}]
+                  PulseCard             [_             {:pulse_id    pulse-id
+                                                        :card_id     card-id
+                                                        :position    0
+                                                        :include_csv true
+                                                        :include_xls true}]
+                  PulseChannel          [{pc-id :id}   {:pulse_id pulse-id}]
+                  PulseChannelRecipient [_             {:user_id          (rasta-id)
+                                                        :pulse_channel_id pc-id}]]
+    (email-test-setup
+     (send-pulse! (retrieve-pulse pulse-id))
+     (et/summarize-multipart-email #"Pulse Name"))))
+
 ;; Basic test, 1 card, 1 recipient, with XLS attachment
 (expect
   (add-rasta-attachment (rasta-pulse-email) xls-attachment)
