@@ -14,7 +14,6 @@ import { mount } from "enzyme";
 
 import {
     CardApi,
-    SettingsApi,
     PulseApi
 } from "metabase/services";
 import Question from "metabase-lib/lib/Question";
@@ -28,7 +27,7 @@ import Toggle from "metabase/components/Toggle";
 
 import { FETCH_PULSES, SET_EDITING_PULSE, SAVE_EDITING_PULSE, FETCH_CARDS, FETCH_PULSE_CARD_PREVIEW } from "metabase/pulse/actions";
 
-fdescribe("Pulse", () => {
+describe("Pulse", () => {
   let questionCount, questionRaw;
   const normalFormInput = PulseApi.form_input
 
